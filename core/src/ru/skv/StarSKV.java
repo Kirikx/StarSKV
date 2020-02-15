@@ -16,7 +16,7 @@ public class StarSKV extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("cloud.jpg");
 		region = new TextureRegion(img, 20, 25, 100, 100);
 	}
 
