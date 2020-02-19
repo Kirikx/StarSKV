@@ -12,8 +12,8 @@ public class MenuScreen extends BaseScreen {
     private Texture img;
     private Vector2 touch;
     private Vector2 v;
-    private Vector2 pos;
     private Vector2 cursor;
+    private Vector2 pos;
 
     @Override
     public void show() {
@@ -21,8 +21,8 @@ public class MenuScreen extends BaseScreen {
         img = new Texture("badlogic.jpg");
         touch = new Vector2();
         v = new Vector2(1, 1);
-        pos = new Vector2(0, 0);
         cursor = new Vector2(0,0);
+        pos = new Vector2(0, 0);
     }
 
     @Override
@@ -32,6 +32,7 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (pos.y + img.getHeight() < Gdx.graphics.getHeight()) {
             pos.add(cursor);
+
         }
         batch.begin();
         batch.draw(img, pos.x, pos.y);
@@ -49,6 +50,7 @@ public class MenuScreen extends BaseScreen {
         super.touchDown(screenX, screenY, pointer, button);
         touch.set(screenX, Gdx.graphics.getHeight() - screenY);
         cursor.set(touch);
+
         cursor.set(cursor.sub(pos).nor()); // заначение курсора получаем путем вычитания из текущего значения курсора позиции элемента и нормализуем
         System.out.println("touch.x = " + touch.x + " touch.y = " + touch.y);
         return false;
