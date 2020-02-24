@@ -10,9 +10,12 @@ import ru.skv.base.BaseScreen;
 public class MenuScreen extends BaseScreen {
 
     private Texture img;
+
     private Vector2 touch;
     private Vector2 v;
+
     private Vector2 cursor;
+
     private Vector2 pos;
 
     @Override
