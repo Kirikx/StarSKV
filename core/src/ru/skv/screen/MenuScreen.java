@@ -6,26 +6,28 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.skv.base.BaseScreen;
+import ru.skv.math.Rect;
+import ru.skv.sprite.Background;
+import ru.skv.sprite.Logo;
 
 public class MenuScreen extends BaseScreen {
 
     private Texture img;
-
-    private Vector2 touch;
-    private Vector2 v;
-
-    private Vector2 cursor;
-
+    private Texture bg;
     private Vector2 pos;
+
+    private Background background;
+    private Logo logo;
 
     @Override
     public void show() {
         super.show();
         img = new Texture("badlogic.jpg");
-        touch = new Vector2();
-        v = new Vector2(1, 1);
-        cursor = new Vector2(0,0);
-        pos = new Vector2(0, 0);
+        bg = new Texture("cloud.jpg");
+        pos = new Vector2();
+        background = new Background(bg);
+        logo = new Logo(img);
+
     }
 
     @Override
@@ -33,27 +35,32 @@ public class MenuScreen extends BaseScreen {
         super.render(delta);
         Gdx.gl.glClearColor(1, 0.2f, 0.5f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (Math.round(pos.x) != touch.x && Math.round(pos.y) != touch.y ) { // решение костыльное но все же оно работает))
-            pos.add(cursor);
-        }
+        logo.update(delta);
         batch.begin();
-        batch.draw(img, pos.x, pos.y);
+        background.draw(batch);
+        logo.draw(batch);
         batch.end();
     }
 
     @Override
     public void dispose() {
         img.dispose();
+        bg.dispose();
         super.dispose();
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        super.touchDown(screenX, screenY, pointer, button);
-        touch.set(screenX, Gdx.graphics.getHeight() - screenY);
-        cursor.set(touch);
-        cursor.set(cursor.sub(pos).nor()); // заначение курсора получаем путем вычитания из текущего значения курсора позиции элемента и нормализуем для получения вектора направления
-        System.out.println("touch.x = " + touch.x + " touch.y = " + touch.y);
+    public void resize(Rect worldBounds) {
+        background.resize(worldBounds);
+        logo.resize(worldBounds);
+        super.resize(worldBounds);
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        logo.touchDown(touch,pointer,button);
         return false;
+
+
     }
 }
