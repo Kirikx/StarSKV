@@ -125,7 +125,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         System.out.println("touchUp screenX = " + screenX + " screenY = " + screenY + " pointer = " + pointer + " button = " + button);
         touch.set(screenX, screenBounds.getHeight() - screenY).mul(screenToWorld);
-        touchDown(touch, pointer, button);
+        touchUp(touch, pointer, button);
         return false;
     }
 
