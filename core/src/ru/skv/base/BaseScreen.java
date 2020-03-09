@@ -3,7 +3,6 @@ package ru.skv.base;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
@@ -143,6 +142,7 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     public boolean touchDragged(Vector2 touch, int pointer) {
+
         System.out.println("touchDragged touchX = " + touch.x + " touchY = " + touch.y + " pointer = " + pointer );
         return false;
     }
