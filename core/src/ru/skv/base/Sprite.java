@@ -26,11 +26,11 @@ public abstract class Sprite extends Rect {
         regions[0] = region;
     }
 
-    public Sprite (TextureRegion region, int rows, int cols, int framews) {
+    public Sprite (TextureRegion region, int rows, int cols, int frames) {
         if (region == null) {
             throw new RuntimeException("Не задана структура");
         }
-        this.regions = Regions.split(region, rows, cols, framews);
+        this.regions = Regions.split(region, rows, cols, frames);
     }
 
     public void draw(SpriteBatch batch) {
