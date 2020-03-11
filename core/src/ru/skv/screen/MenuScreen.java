@@ -1,56 +1,115 @@
 package ru.skv.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.skv.base.BaseScreen;
+import ru.skv.math.Rect;
+import ru.skv.sprite.Background;
+import ru.skv.sprite.ButtonExit;
+import ru.skv.sprite.ButtonPlay;
+import ru.skv.sprite.Star;
 
 public class MenuScreen extends BaseScreen {
 
-    private Texture img;
-    private Vector2 touch;
-    private Vector2 v;
-    private Vector2 cursor;
-    private Vector2 pos;
+    private static final int COUNT_STAR = 256;
+
+    private Star[] stars;
+
+    private final Game game;
+
+    private TextureAtlas atlas;
+
+    private Texture bg;
+
+    private Background background;
+
+    private ButtonExit buttonExit;
+
+    private ButtonPlay buttonPlay;
+
+
+    public MenuScreen(Game game) {
+        this.game = game;
+    }
+
 
     @Override
     public void show() {
         super.show();
-        img = new Texture("badlogic.jpg");
-        touch = new Vector2();
-        v = new Vector2(1, 1);
-        cursor = new Vector2(0,0);
-        pos = new Vector2(0, 0);
+        bg = new Texture("textures/bg.png");
+        background = new Background(bg);
+        atlas = new TextureAtlas(Gdx.files.internal("textures/menuAtlas.tpack"));
+        stars = new Star[COUNT_STAR];
+        for (int i = 0; i < COUNT_STAR; i++) {
+            stars[i] = new Star(atlas);
+        }
+        buttonExit = new ButtonExit(atlas);
+        buttonPlay = new ButtonPlay(atlas, game);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.gl.glClearColor(1, 0.2f, 0.5f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (Math.round(pos.x) != touch.x && Math.round(pos.y) != touch.y ) { // решение костыльное но все же оно работает))
-            pos.add(cursor);
-        }
-        batch.begin();
-        batch.draw(img, pos.x, pos.y);
-        batch.end();
+
+        update(delta);
+        drow();
     }
 
     @Override
     public void dispose() {
-        img.dispose();
+        bg.dispose();
+        atlas.dispose();
         super.dispose();
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        super.touchDown(screenX, screenY, pointer, button);
-        touch.set(screenX, Gdx.graphics.getHeight() - screenY);
-        cursor.set(touch);
-        cursor.set(cursor.sub(pos).nor()); // заначение курсора получаем путем вычитания из текущего значения курсора позиции элемента и нормализуем для получения вектора направления
-        System.out.println("touch.x = " + touch.x + " touch.y = " + touch.y);
+    public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
+        background.resize(worldBounds);
+        for (Star star : stars) {
+            star.resize(worldBounds);
+        }
+        buttonExit.resize(worldBounds);
+        buttonPlay.resize(worldBounds);
+    }
+
+    @Override
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+        buttonExit.touchDown(touch,pointer,button);
+        buttonPlay.touchDown(touch,pointer,button);
         return false;
+    }
+
+    @Override
+    public boolean touchUp(Vector2 touch, int pointer, int button) {
+        buttonExit.touchUp(touch, pointer, button);
+        buttonPlay.touchUp(touch, pointer, button);
+        return false;
+    }
+
+    private void update(float delta) {
+        for (Star star : stars) {
+            star.update(delta);
+        }
+
+
+    }
+
+    private void drow() {
+        Gdx.gl.glClearColor(1, 0.2f, 0.5f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        background.draw(batch);
+        for (Star star: stars) {
+            star.draw(batch);
+        }
+        buttonExit.draw(batch);
+        buttonPlay.draw(batch);
+        batch.end();
     }
 }
