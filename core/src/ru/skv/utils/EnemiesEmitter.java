@@ -29,7 +29,7 @@ public class EnemiesEmitter {
     private static final float ENEMY_BIG_BULLET_HEIGHT = 0.04f;
     private static final float ENEMY_BIG_BULLET_VY = -0.3f;
     private static final int ENEMY_BIG_DAMAGE = 10;
-    private static final float ENEMY_BIG_RELOAD_INTERVAL = 1f;
+    private static final float ENEMY_BIG_RELOAD_INTERVAL = 1.5f;
     private static final int ENEMY_BIG_HP = 10;
 
     private Rect worldBounds;

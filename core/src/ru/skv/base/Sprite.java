@@ -80,6 +80,7 @@ public abstract class Sprite extends Rect {
         this.destroyed = true;
     }
 
+
     public void flushDestroy () {
         this.destroyed = false;
     }

@@ -11,6 +11,11 @@ public class Bullet extends Sprite {
     private Rect worldBounds;
     private final Vector2 v;
     private int damage;
+
+    public Sprite getOwner() {
+        return owner;
+    }
+
     private Sprite owner;
 
 

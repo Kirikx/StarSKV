@@ -12,7 +12,7 @@ import ru.skv.pool.ExplosionPool;
 
 public class Enemy extends Ship {
 
-    private final Vector2 startSpeed = new Vector2(0f, -0.3f);
+    private final Vector2 startSpeed;
 
     public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Sound shootSound, Rect worldBounds) {
         this.bulletPool = bulletPool;
@@ -25,6 +25,7 @@ public class Enemy extends Ship {
 
         this.bulletV = new Vector2();
         this.bulletPosition = new Vector2();
+        this.startSpeed = new Vector2(0f, -0.3f);
     }
 
     @Override
@@ -33,6 +34,8 @@ public class Enemy extends Ship {
         super.update(delta);
         if (getTop() < worldBounds.getTop()) {
             vSpeed.set(move);
+        } else {
+            this.reloadTimer = reloadInterval*0.9f;
         }
         if (getBottom() < worldBounds.getBottom()) {
             destroy();
@@ -61,4 +64,13 @@ public class Enemy extends Ship {
         this.hp = hp;
         vSpeed.set(startSpeed);
     }
+
+    public  boolean isBulletCollision (Rect bullet) {
+       return !(bullet.getRight() < getLeft()
+               || bullet.getLeft() > getRight()
+               || bullet.getBottom() > getTop()
+               || bullet.getTop() < pos.y);
+    }
+
+
 }

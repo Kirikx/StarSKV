@@ -17,6 +17,7 @@ public class StarShip extends Ship {
     private static final int INVALID_POINTER = -1;
 
     private boolean pressedLeft;
+
     private boolean pressedRight;
 
     private int leftPointer = INVALID_POINTER;
@@ -34,7 +35,7 @@ public class StarShip extends Ship {
         this.bulletHeight = 0.01f;
         this.damage = 1;
         this.reloadInterval = 0.2f;
-        this.hp = 100;
+        this.hp = 1;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
 
@@ -138,6 +139,17 @@ public class StarShip extends Ship {
         }
     }
 
+
+    public void newGame () {
+        stop();
+        this.pressedLeft = false;
+        this.pressedRight = false;
+        this.hp = 1;
+        this.destroyed = false;
+        pos.x = 0f;
+    }
+
+
     public void moveRight() {
         vSpeed.set(move);
     }
@@ -149,6 +161,13 @@ public class StarShip extends Ship {
     public void stop() {
         vSpeed.setZero();
 
+    }
+
+    public  boolean isBulletCollision (Rect bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y
+                || bullet.getTop() < getBottom());
     }
 
 }
