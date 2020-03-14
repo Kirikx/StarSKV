@@ -34,6 +34,8 @@ public class Ship extends Sprite {
 
     protected Sound shootSound;
 
+
+
     protected int hp;
 
     public Ship() {
@@ -65,6 +67,7 @@ public class Ship extends Sprite {
     @Override
     public void destroy() {
         super.destroy();
+        this.hp = 0;
         boom();
     }
 
@@ -92,5 +95,12 @@ public class Ship extends Sprite {
         explosion.set(getHeight(), pos);
     }
 
+    public int getHp() {
+        return hp;
+    }
+
+    public Vector2 getvSpeed() {
+        return vSpeed;
+    }
 }
 

@@ -15,6 +15,7 @@ public class StarShip extends Ship {
     private static final float PADDING = 0.04f;
 
     private static final int INVALID_POINTER = -1;
+    private static final int HP = 100;
 
     private boolean pressedLeft;
 
@@ -35,7 +36,7 @@ public class StarShip extends Ship {
         this.bulletHeight = 0.01f;
         this.damage = 1;
         this.reloadInterval = 0.2f;
-        this.hp = 1;
+        this.hp = HP;
         this.shootSound = Gdx.audio.newSound(Gdx.files.internal("sounds/laser.wav"));
     }
 
@@ -140,13 +141,16 @@ public class StarShip extends Ship {
     }
 
 
-    public void newGame () {
+    public void startNewGame () {
+        this.hp = HP;
         stop();
-        this.pressedLeft = false;
-        this.pressedRight = false;
-        this.hp = 1;
-        this.destroyed = false;
-        pos.x = 0f;
+        pressedLeft = false;
+        pressedRight = false;
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        this.pos.x = worldBounds.pos.x;
+        flushDestroy();
+
     }
 
 
