@@ -74,7 +74,8 @@ public class GameScreen extends BaseScreen {
     @Override
     public void show() {
         super.show();
-        bg = new Texture("textures/bg.png");
+//        bg = new Texture("textures/bg.png");
+        bg = new Texture("castom/sky.jpg");
         background = new Background(bg);
         atlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.wav"));
@@ -88,7 +89,8 @@ public class GameScreen extends BaseScreen {
         for (int i = 0; i < COUNT_STAR; i++) {
             stars[i] = new TrackingStar(atlas, starShip.getvSpeed());
         }
-        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+//        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("castom/biotica.mp3"));
         music.setLooping(true);
         music.play();
         messageGameOver = new MessageGameOver(atlas);
